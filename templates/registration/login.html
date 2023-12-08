@@ -1,0 +1,26 @@
+{%extends 'base.html'%}
+
+{%block content %}
+
+{%if form.error %}
+<p>Your name and password are wrong</p>
+{%endif%}
+
+{%if user.is_authenticated%}
+        <h2>welcome {{user.username}}</h2>
+{%else%}
+    <form method="POST", action="{% url 'login' %}">
+        <div class="container" style=" border: 4px solid cornflowerblue; padding: 8px; width: 50%;">
+            {%for field in form%}
+            <div class="mb-3">
+                {% csrf_token %}
+                {{field.label_tag}}
+                {{field}}
+            </div>
+            {%endfor%}
+            <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+    </form>
+{%endif%}
+
+{%endblock%}
